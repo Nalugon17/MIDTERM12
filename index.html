@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Enrollment</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <style>
+        body{
+            display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+        
+    </style>
+    <div class="header-box">
+    <h1>School Enrollment</h1>  
+      </div>
+    <form id="create-form">
+        <h2>Create</h2>
+        <input type="text" id="FirstName" placeholder="FirstName">
+        <input type="text" id="MiddleName" placeholder="MiddleName">
+        <input type="text" id="LastName" placeholder="LastName">
+        <input type="text" id="Age" placeholder="Age">
+        <input type="text" id="Gender" placeholder="Gender">
+        <input type="text" id="Birthday" placeholder="Birthday">
+        <input type="text" id="Course" placeholder="Course">
+        <input type="text" id="SchoolYear" placeholder="SchoolYear">
+        <button type="button" onclick="createRecord()">Create</button>
+    </form>
+
+    <form id="update-form">
+        <h2>Update</h2>
+        <input type="text" id="update-id" placeholder="ID">
+        <input type="text" id="update-fname" placeholder="Enter FirstName">
+        <input type="text" id="update-Mname" placeholder="Enter MiddleName">
+        <input type="text" id="update-Lname" placeholder="Enter LastName">
+        <input type="text" id="update-Age" placeholder="Enter Age">
+        <input type="text" id="update-Birthday" placeholder="Enter Birthday">
+        <input type="text" id="update-Course" placeholder="Enter Course">
+        <input type="text" id="update-SchoolYear" placeholder="Enter SchoolYear">
+        <button type="button" onclick="updateRecord()">Update</button>
+    </form>
+
+    <form id="delete-form">
+        <h2>Delete</h2>
+        <input type="text" id="delete-id" placeholder="ID">
+        <button type="button" onclick="deleteRecord()">Delete</button>
+    </form>
+
+    <h2>EnrollmentList</h2>
+    <ul id="record-list"></ul>
+
+    <script>
+        let records = [];
+        let recordId = 1;
+
+        function createRecord() {
+            const FirstName = document.getElementById("FirstName").value;
+            const MiddleName = document.getElementById("MiddleName").value;
+            const LastName = document.getElementById("LastName").value;
+            const Age = document.getElementById("Age").value;
+            const Birthday = document.getElementById("Birthday").value;
+            const Course = document.getElementById("Course").value;
+            const SchoolYear = document.getElementById("SchoolYear").value;
+
+            const newRecord = { id: recordId++, FirstName, MiddleName, LastName, Age, Birthday, Course, SchoolYear };
+            records.push(newRecord);
+
+            displayRecords();
+            clearForm("create-form");
+        }
+
+        function displayRecords() {
+            const recordList = document.getElementById("record-list");
+            recordList.innerHTML = "";
+
+            for (const record of records) {
+                const li = document.createElement("li");
+                li.innerHTML = `SchoolID: ${record.id}, FirstName: ${record.FirstName}, MiddleName: ${record.MiddleName}, LastName: ${record.LastName}, Age: ${record.Age}, Birthday: ${record.Birthday}, SchoolYear: ${SchoolYear}`;
+                recordList.appendChild(li);
+            }
+        }
+
+        function clearForm(formId) {
+            const form = document.getElementById(formId);
+            form.reset();
+        }
+
+        function updateRecord() {
+            const id = document.getElementById("update-id").value;
+            const FirstName = document.getElementById("update-FirstName").value;
+            const MiddleName = document.getElementById("update-MiddleName").value;
+            const LastName = document.getElementById("update-LastName").value;
+            const Age = document.getElementById("update-Age").value;
+            const Birthday = document.getElementById("update-Birthday").value;
+            const Course = document.getElementById("update-Course").value;
+            const SchoolYear = document.getElementById("update-SchoolYear").value;
+            const recordToUpdate = records.find(record => record.id == id);
+            
+            if (recordToUpdate) {
+                if (FirstName) {
+                    recordToUpdate.FirstName = FirstName;
+                }
+                if (MiddleName) {
+                    recordToUpdate.MiddleName = MiddleName;
+                }
+                if (LastName) {
+                    recordToUpdate.LastName = LastName;
+                }
+                if (Age) {
+                    recordToUpdate.Age = Age;
+                }
+                if (Birthday) {
+                    recordToUpdate.Birthday = Birthday;
+                }
+                if (Course) {
+                    recordToUpdate.Course = SchoolYear;
+                }
+                if (SchoolYear) {
+                    recordToUpdate.SchoolYear = SchoolYear;
+                }
+                displayRecords();
+                clearForm("update-form");
+            } else {
+                alert("Record not found");
+            }
+        }
+
+        function deleteRecord() {
+            const id = document.getElementById("delete-id").value;
+            const index = records.findIndex(record => record.id == id);
+
+            if (index !== -1) {
+                records.splice(index, 1);
+                displayRecords();
+                clearForm("delete-form");
+            } else {
+                alert("Record not found");
+            }
+        }
+
+        displayRecords();
+    </script>
+</body>
+</html>
